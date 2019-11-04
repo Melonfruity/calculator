@@ -1,20 +1,16 @@
 const add = (a, b) => {
-  console.log('add', a, b , '=', a + b)
   return a + b;
 }
 
 const sub = (a, b) => {
-  console.log('sub', a, b , '=', a - b)
   return a - b;
 }
 
 const mult = (a, b) => {
-  console.log('mult', a, b , '=', a * b)
   return a * b;
 }
 
 const div = (a, b) => {
-  console.log('div', a, b , '=', a / b)
   return a / b;
 }
 
@@ -34,6 +30,7 @@ clearButton.style.cssText = `
   margin-top:10px;
   height: 36px;
   `;
+clearButton.id = 'C';
 
 clearButton.addEventListener('click', (e) => {
   const i = document.querySelector('input');
@@ -49,6 +46,7 @@ const numbers = () => {
   for(let i = 0; i <= 9; i ++){
     const n = document.createElement('button');
     n.textContent = i;
+    n.classList.add(`numberButtons`);
     numberButtons.push(n);
   }
   return numberButtons;
@@ -77,6 +75,10 @@ const nums = [zeroButton, oneButton, twoButton, threeButton,
 
 const ops = [addButton, subButton, multButton, divButton, evalButton, decButton];
 
+ops.forEach(op => {
+  op.classList.add(`opButtons`);
+})
+
 const buttons = [...ops, ...nums];
 
 // 80, 30
@@ -102,7 +104,6 @@ buttons.forEach(button => {
     const i = document.querySelector('input');
 
     if(Number(op) || op === '0'){
-      console.log(secondNum, currentOp)
       if(secondNum != ''){
         secondNum += op;
         i.value = secondNum;
@@ -144,7 +145,6 @@ const evaluateNumbers = (op, a, b) => {
   b = Number(b);
   secondNum = '';
   currentOp = '';
-  console.log(op, a , b);
   switch (op) {
     case '+':
       firstNum = add(a, b);
