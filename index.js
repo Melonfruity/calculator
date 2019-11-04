@@ -11,6 +11,7 @@ const mult = (a, b) => {
 }
 
 const div = (a, b) => {
+  if(b === 0) return 'SNARKY'
   return a / b;
 }
 
@@ -103,8 +104,9 @@ buttons.forEach(button => {
     const op = e.target.textContent;
     const i = document.querySelector('input');
 
-    if(Number(op) || op === '0'){
+    if(Number(op) || op === '0' || op === '.'){
       if(secondNum != ''){
+        if(secondNum.includes('.') && op === '.') return;
         secondNum += op;
         i.value = secondNum;
       } 
@@ -129,8 +131,7 @@ buttons.forEach(button => {
         firstNum = secondNum;
         secondNum = '';
       } else if(firstNum !== '' && secondNum !== '' && op === '='){
-        if(currentOp !== ''){
-          console.log('evaluating', firstNum, currentOp, secondNum);  
+        if(currentOp !== ''){  
           evaluateNumbers(currentOp, firstNum, secondNum);
         }
       }
@@ -148,23 +149,24 @@ const evaluateNumbers = (op, a, b) => {
   switch (op) {
     case '+':
       firstNum = add(a, b);
-      i.value = firstNum;
       break;
     case '-':
       firstNum = sub(a, b);
-      i.value = firstNum;
       break;
     case '*':
       firstNum = mult(a, b);
-      i.value = firstNum;
       break;
     case '/':
       firstNum = div(a, b);
-      i.value = firstNum;
       break;
     case '=':
       console.log('EQUALS');
       break;
+  }
+  if(Number(firstNum)) Math.floor(firstNum) - firstNum === 0 ? i.value = firstNum : i.value = firstNum.toFixed(2);
+  else{
+    i.value = firstNum;
+    firstNum = '';
   }
 }
 
